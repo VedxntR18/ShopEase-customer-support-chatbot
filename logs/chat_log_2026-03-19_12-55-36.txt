@@ -1,0 +1,40 @@
+==================================================
+  ShopEase Chatbot — Session Log
+  Date: 2026-03-19 12:55:36
+==================================================
+
+[12:55:36] Bot: Hello! I'm your ShopEase customer support assistant. How can I help you today?
+[12:55:57] You: hello
+[12:55:57] Bot: Hello! Welcome to ShopEase Support. How can I help you today?
+[12:56:07] You: where is my order?
+[12:56:07] Bot: Sure! Share your Order ID starting with ORD- and I'll check the status.
+[12:56:12] You: my order id is ORD-48291
+[12:56:12] Bot: Order ORD-48291 has been SHIPPED via BlueDart. Expected delivery: 2 business days.  (Order detected: ORD-48291)
+[12:56:21] You: I want to return my order
+[12:56:21] Bot: Sure! Returns are easy at ShopEase. Items must be unused and in original packaging. Shall I initiate one for you?
+[12:56:27] You: when will I get my refund?
+[12:56:27] Bot: Refunds are processed within 5-7 business days after return pickup. Please check your bank account.
+[12:56:42] You: i want to throw order in trash
+[12:56:42] Bot: Orders can be cancelled before they are shipped. Go to My Orders → Select → Cancel Order.
+[12:56:54] You: I received a damaged product. My Sony Headphones are broken
+[12:56:54] Bot: Oh no! We're sorry for the inconvenience. We take product quality seriously. Let me escalate this right away.  (Product detected: Sony Headphones)
+[12:57:01] You: my payment was deducted but order was not placed
+[12:57:01] Bot: Payment failures are auto-reversed to your account. If not received in 7 days, contact your bank.
+[12:57:22] You: i have this
+[12:57:22] Bot: I couldn't understand your query. Type 'help' to see what I can assist with.
+[12:57:30] You: i hate this order
+[12:57:30] Bot: I can help track your order! Could you provide your Order ID?
+[12:58:04] You: FUK-70583
+[12:58:04] Bot: I couldn't understand your query. Type 'help' to see what I can assist with.
+[12:58:32] You: yuck fou
+[12:58:32] Bot: I'm sorry, I didn't understand that. Could you rephrase?
+[12:58:36] You: blah
+[12:58:36] Bot: I couldn't understand your query. Type 'help' to see what I can assist with.
+[12:58:45] You: i hate this site
+[12:58:45] Bot: Hmm, I'm not sure about that. Try asking about orders, returns, or refunds!
+[12:58:52] You: good
+[12:58:52] Bot: Hi there! I'm your ShopEase assistant. What can I do for you?
+[12:59:05] You: bad morning
+[12:59:05] Bot: Hi there! I'm your ShopEase assistant. What can I do for you?
+[12:59:15] You: bye
+[12:59:15] Bot: Thank you for contacting ShopEase! Have a wonderful day! 👋

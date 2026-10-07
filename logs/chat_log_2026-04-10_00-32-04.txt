@@ -1,0 +1,43 @@
+==================================================
+  ShopEase Chatbot — Session Log
+  Date: 2026-04-10 00:32:04
+==================================================
+
+[00:32:04] Bot: Hello! I'm your ShopEase customer support assistant. How can I help you today?
+[00:32:15] You: hello, where is my order
+[00:32:15] Bot: Hi there! I'm your ShopEase assistant. What can I do for you?
+[00:32:25] You: where is my order
+[00:32:25] Bot: I couldn't catch that. Could you be more specific?
+  💡 Example: 'Where is my order ORD-12345?'
+[00:32:45] You: where is my order ORD-53852
+[00:32:45] Bot: I can help track your order! Could you provide your Order ID?  (Order detected: ORD-53852)
+[00:32:58] You: where is my order
+[00:32:58] Bot: I'm sorry, I didn't understand that. Could you rephrase?
+  💡 Try: 'track my order', 'return item', 'refund status'
+[00:33:07] You: track my order
+[00:33:07] Bot: Please share your Order ID (format: ORD-XXXXX) and I'll look it up for you.
+[00:33:18] You: ORD-53852
+[00:33:18] Bot: I'm sorry, I didn't understand that. Could you rephrase?
+  💡 Try: 'track my order', 'return item', 'refund status'  (Order detected: ORD-53852)
+[00:33:38] You: i recived damaged product
+[00:33:38] Bot: I'm really sorry about that! We'll arrange a free replacement immediately. Please share your Order ID.
+[00:34:01] You: my order id is ORD-53852
+[00:34:01] Bot: Order ORD-53852 has been SHIPPED via BlueDart. Expected delivery: 2 business days.  (Order detected: ORD-53852)
+[00:34:15] You: i want to return my order
+[00:34:15] Bot: You can return items within 30 days of delivery. Go to My Orders → Select Order → Click 'Return'. Need help?
+[00:34:28] You: my sony headphones are damaged
+[00:34:28] Bot: I'm really sorry about that! We'll arrange a free replacement immediately. Please share your Order ID.  (Product detected: Sony Headphones)
+[00:34:53] You: my order id is ORD-53852
+[00:34:53] Bot: Got it! Order ORD-53852 is currently OUT FOR DELIVERY and will arrive by tomorrow.  (Order detected: ORD-53852)
+[00:35:05] You: but i want to cancel it
+[00:35:05] Bot: Orders can be cancelled before they are shipped. Go to My Orders → Select → Cancel Order.
+[00:35:16] You: my mine is already shipped
+[00:35:16] Bot: I can help track your order! Could you provide your Order ID?
+[00:35:27] You: ODR-52852
+[00:35:27] Bot: Hmm, I'm not sure about that.
+  💡 Type 'help' to see all topics I can assist with!
+[00:35:45] You: i have payment problem
+[00:35:46] Bot: I've flagged this. Our delivery team will attempt redelivery tomorrow. Shall we update your address?
+[00:35:53] You: yes
+[00:35:53] Bot: Hmm, I'm not sure about that.
+  💡 Type 'help' to see all topics I can assist with!

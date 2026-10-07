@@ -1,0 +1,19 @@
+==================================================
+  ShopEase Chatbot — Session Log
+  Date: 2026-04-10 12:37:27
+==================================================
+
+[12:37:27] Bot: Hello! I'm your ShopEase customer support assistant. How can I help you today?
+[12:37:43] You: hello
+[12:37:43] Bot: Hey! Welcome. Ask me about orders, returns, refunds, or products!
+[12:38:10] You: where is my order?
+[12:38:10] Bot: I'm sorry, I didn't understand that. Could you rephrase?
+  💡 Try: 'track my order', 'return item', 'refund status'
+[12:38:18] You: track my order
+[12:38:18] Bot: Please share your Order ID (format: ORD-XXXXX) and I'll look it up for you.
+[12:38:42] You: my order id is ORD-53826
+[12:38:42] Bot: Order ORD-53826 is PROCESSING at our warehouse. It will ship within 24 hours.  (Order detected: ORD-53826)
+[12:39:04] You: i want to cancel my order
+[12:39:04] Bot: Orders can be cancelled before they are shipped. Go to My Orders → Select → Cancel Order.
+[15:23:06] You: exit
+[15:23:06] Bot: Thank you for contacting ShopEase! Have a wonderful day! 👋

@@ -1,0 +1,53 @@
+==================================================
+  ShopEase Chatbot — Session Log
+  Date: 2026-04-09 12:00:01
+==================================================
+
+[12:00:01] Bot: Hello! I'm your ShopEase customer support assistant. How can I help you today?
+[12:02:18] You: hello
+[12:02:18] Bot: Hello! Welcome to ShopEase Support. How can I help you today?
+[12:02:39] You: talk to human agent
+[12:02:39] Bot: Connecting you to a live agent... Meanwhile, our helpline is 1800-XXX-XXXX (9AM-9PM).
+[12:02:55] You: what is my order status
+[12:02:55] Bot: Please share your Order ID (format: ORD-XXXXX) and I'll look it up for you.
+[12:03:05] You: ord-12345
+[12:03:05] Bot: Hmm, I'm not sure about that.
+  💡 Type 'help' to see all topics I can assist with!  (Order detected: ORD-12345)
+[12:03:16] You: ORD-12345
+[12:03:16] Bot: I'm sorry, I didn't understand that. Could you rephrase?
+  💡 Try: 'track my order', 'return item', 'refund status'  (Order detected: ORD-12345)
+[12:03:33] You: track my order ORD-12345
+[12:03:33] Bot: I can help track your order! Could you provide your Order ID?  (Order detected: ORD-12345)
+[12:03:42] You: yes
+[12:03:42] Bot: Hmm, I'm not sure about that.
+  💡 Type 'help' to see all topics I can assist with!
+[12:03:49] You: where is my order
+[12:03:49] Bot: I'm sorry, I didn't understand that. Could you rephrase?
+  💡 Try: 'track my order', 'return item', 'refund status'
+[12:03:59] You: track my order
+[12:03:59] Bot: Sure! Share your Order ID starting with ORD- and I'll check the status.
+[12:04:10] You: ORD-56235
+[12:04:10] Bot: I couldn't catch that. Could you be more specific?
+  💡 Example: 'Where is my order ORD-12345?'  (Order detected: ORD-56235)
+[12:04:38] You: Where is my order ORD-544332
+[12:04:38] Bot: I can help track your order! Could you provide your Order ID?
+[12:04:45] You: 32424
+[12:04:45] Bot: I couldn't catch that. Could you be more specific?
+  💡 Example: 'Where is my order ORD-12345?'
+[12:05:37] You: where is my order
+[12:05:37] Bot: Hmm, I'm not sure about that.
+  💡 Type 'help' to see all topics I can assist with!
+[12:05:58] You: my order id is ORD-48291
+[12:05:58] Bot: Order ORD-48291 has been SHIPPED via BlueDart. Expected delivery: 2 business days.  (Order detected: ORD-48291)
+[12:06:21] You: WHEN WILL I GET MY REFUND
+[12:06:21] Bot: Once we receive the returned item, refunds are initiated within 48 hours. Bank credit takes 5-7 days.
+[12:06:33] You: WHERE IS MY ORDER
+[12:06:33] Bot: Hmm, I'm not sure about that.
+  💡 Type 'help' to see all topics I can assist with!
+[12:06:53] You: where is my order?
+[12:06:53] Bot: I couldn't catch that. Could you be more specific?
+  💡 Example: 'Where is my order ORD-12345?'
+[12:07:19] You: where is my order ORD-48921
+[12:07:19] Bot: Please share your Order ID (format: ORD-XXXXX) and I'll look it up for you.  (Order detected: ORD-48921)
+[12:07:38] You: my order id is ORD-48921
+[12:07:38] Bot: Order ORD-48921 is PROCESSING at our warehouse. It will ship within 24 hours.  (Order detected: ORD-48921)
