@@ -178,6 +178,10 @@ OUT FOR DELIVERY and is expected by tomorrow.
 
 These statuses are **simulated template responses**, not live order lookups.
 
+## Continuous Integration
+
+GitHub Actions runs the automated test suite on pushes and pull requests targeting `main`. The workflow installs the pinned dependencies, prepares the required NLTK resources, and runs `pytest tests/ -v`.
+
 ## Testing
 
 Run:
