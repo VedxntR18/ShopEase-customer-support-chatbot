@@ -1,14 +1,17 @@
 import sys
-import random
+
 from colorama import Fore, Style, init
-init(autoreset=True)
+
 from intent_classifier import IntentClassifier
 from ner import extract_entities
 from logger import start_log, save_message
 
+init(autoreset=True)
+
 BOT_NAME = "ShopEase Bot"
 EXIT_COMMANDS = {"exit", "quit", "bye", "goodbye", "q"}
-SHOW_DEBUG = True
+SHOW_DEBUG = False
+
 
 def print_banner():
     print(Fore.CYAN + "=" * 60)
@@ -18,11 +21,14 @@ def print_banner():
     print(Fore.YELLOW + "   Type 'exit' anytime to quit | Type 'help' for options")
     print(Fore.CYAN + "=" * 60 + "\n")
 
+
 def print_bot(message):
     print(Fore.GREEN + f"\n  🤖 {BOT_NAME}: " + Style.RESET_ALL + message + "\n")
 
+
 def print_user_prompt():
     return Fore.BLUE + "  👤 You: " + Style.RESET_ALL
+
 
 def print_help():
     help_text = """
@@ -41,15 +47,15 @@ def print_help():
     """
     print(Fore.YELLOW + help_text)
 
+
 def personalize_response(response, entities):
     order_id = entities.get("order_id")
-    product  = entities.get("product")
-    phone    = entities.get("phone")
+    product = entities.get("product")
+    phone = entities.get("phone")
+
     if "{order_id}" in response:
-        if order_id:
-            response = response.replace("{order_id}", order_id)
-        else:
-            response = response.replace("{order_id}", "[your order]")
+        response = response.replace("{order_id}", order_id or "[your order]")
+
     addons = []
     if order_id:
         addons.append(f"(Order detected: {order_id})")
@@ -57,50 +63,81 @@ def personalize_response(response, entities):
         addons.append(f"(Product detected: {product})")
     if phone:
         addons.append(f"(Phone noted: {phone})")
+
     if addons:
         response += "  " + " ".join(addons)
+
     return response
+
 
 def main():
     print_banner()
     print(Fore.YELLOW + "  ⚙  Loading NLP models...", end="")
-    classifier = IntentClassifier()
+
+    try:
+        classifier = IntentClassifier()
+    except RuntimeError as exc:
+        print(Fore.RED + " Failed!")
+        print_bot(str(exc))
+        sys.exit(1)
+
     print(Fore.GREEN + " Done! ✓\n")
+
     log_file = start_log()
-    opening_msg = ("Hello! I'm your ShopEase customer support "
-                   "assistant. How can I help you today?")
+    opening_msg = (
+        "Hello! I'm your ShopEase customer support assistant. "
+        "How can I help you today?"
+    )
     print_bot(opening_msg)
     save_message(log_file, "Bot", opening_msg)
+
     while True:
         try:
-            
             user_input = input(print_user_prompt()).strip()
         except (KeyboardInterrupt, EOFError):
             bye_msg = "Session interrupted. Goodbye! Have a great day! 👋"
             print_bot(bye_msg)
             save_message(log_file, "Bot", bye_msg)
-            sys.exit(0)
+            return
+
         if not user_input:
             print(Fore.RED + "  ⚠  Please type something!\n")
             continue
+
         if user_input.lower() == "help":
             print_help()
             continue
+
         save_message(log_file, "You", user_input)
+
         if user_input.lower() in EXIT_COMMANDS:
-            bye_msg ="Thank you for contacting ShopEase! Have a wonderful day! 👋"
+            bye_msg = "Thank you for contacting ShopEase! Have a wonderful day! 👋"
             print_bot(bye_msg)
             save_message(log_file, "Bot", bye_msg)
-            sys.exit(0)
+            return
+
         entities = extract_entities(user_input)
         intent_tag, confidence, response = classifier.classify(user_input)
+
+        # A standalone valid order ID has no useful semantic context for TF-IDF,
+        # but the entity extractor can still identify it reliably.
+        if intent_tag == "unknown" and entities.get("order_id"):
+            intent_tag = "order_id_provided"
+            confidence = 1.0
+            response = classifier.response_for_intent(intent_tag)
+
         response = personalize_response(response, entities)
+
         if SHOW_DEBUG:
-            print(Fore.MAGENTA +
-                  f"  [DEBUG] Intent: {intent_tag} | Confidence: {confidence} | "
-                  f"Entities: {entities}")
+            print(
+                Fore.MAGENTA
+                + f"  [DEBUG] Intent: {intent_tag} | Confidence: {confidence} | "
+                f"Entities: {entities}"
+            )
+
         print_bot(response)
         save_message(log_file, "Bot", response)
+
 
 if __name__ == "__main__":
     main()
