@@ -34,11 +34,6 @@ class IntentClassifier:
     def classify(self, user_input):
         clean_input = tokens_to_string(preprocess(user_input))
 
-        if len(clean_input.split()) < 2 and clean_input not in {
-            "hi", "hello", "bye", "thanks", "help"
-        }:
-            return "unknown", 0.0, self._fallback_response()
-
         if not clean_input.strip():
             return "unknown", 0.0, self._fallback_response()
 
