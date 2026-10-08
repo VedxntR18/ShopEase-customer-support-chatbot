@@ -1,23 +1,17 @@
 # 🛒 ShopEase Customer Support Chatbot
 
-A modular **NLP-based customer support chatbot** for e-commerce applications, developed in Python as a command-line application.
+A modular **NLP-based customer-support chatbot** for e-commerce applications, built in Python as a command-line application.
 
-ShopEase can understand common customer-support queries, classify their intent, extract useful entities such as order IDs and product names, generate contextual responses, and maintain timestamped session logs.
+ShopEase demonstrates a classic intent-classification workflow using **NLTK preprocessing, TF-IDF, cosine similarity, rule-based entity extraction, response templates, fallback handling, and session logging**.
 
----
+> **Scope:** This is an educational/demo NLP application. It does **not** connect to a real order database, payment gateway, customer account system, or live support platform.
 
-## 📌 Overview
-
-Customer-support systems need to interpret natural-language queries and route them to appropriate responses.
-
-This project implements a lightweight NLP-based approach without relying on external APIs or large language models.
-
-The chatbot processes a user's message through the following pipeline:
+## Architecture
 
 ```text
 User Input
     ↓
-Text Preprocessing
+NLTK Preprocessing
     ↓
 TF-IDF Vectorization
     ↓
@@ -25,526 +19,226 @@ Cosine Similarity
     ↓
 Intent Classification
     ↓
-Entity Extraction
+Rule-based Entity Extraction
     ↓
 Response Personalization
     ↓
 Session Logging
 ```
 
-The system is designed as a modular Python application, with separate components for preprocessing, intent classification, entity extraction, response handling, and logging.
+## Features
 
----
-
-## ✨ Features
-
-### 💬 Customer Support
-
-The chatbot can handle common e-commerce support scenarios including:
-
-- Order status and tracking
-- Return requests
-- Refund status
+- Order-status and tracking intent
+- Returns and refunds
 - Order cancellation
 - Product complaints
-- Damaged or incorrect products
-- Delivery issues
-- Payment problems
+- Delivery and payment issues
 - Product information
 - Discounts and coupons
-- Warranty claims
-- Human-agent requests
+- Warranty questions
+- Human-agent request intent
+- Frustration/fallback handling
+- Order ID, product, and Indian phone-number extraction
+- Timestamped session logs
+- Confidence threshold for unknown queries
+- Entity-aware handling for standalone order IDs
 
-### 🧠 NLP Processing
+## NLP Approach
 
-The project implements several NLP techniques:
+### Preprocessing
 
-- Text normalization
-- Lowercase conversion
-- Punctuation removal
-- Tokenization using NLTK
-- Stopword removal
-- TF-IDF vectorization
-- Cosine similarity-based intent classification
+The input is:
 
-### 🎯 Intent Classification
+1. converted to lowercase
+2. stripped of punctuation
+3. tokenized with NLTK
+4. filtered using NLTK English stopwords
 
-User queries are converted into TF-IDF vectors and compared against predefined intent patterns using cosine similarity.
+### Intent Classification
 
-The system selects the intent with the highest similarity score.
+The classifier:
 
-A confidence threshold is also implemented to prevent low-confidence inputs from being incorrectly classified.
+1. builds a TF-IDF representation from the patterns in `data/intents.py`
+2. transforms each user message into the same feature space
+3. computes cosine similarity against all intent patterns
+4. selects the highest-scoring intent
+5. falls back to an unknown response when the score is below `0.20`
 
-When the similarity score is below the configured threshold, the chatbot uses a fallback response.
+Responses are selected from predefined templates for the predicted intent.
 
-### 🔎 Entity Extraction
+### Entity Extraction
 
-The chatbot extracts useful entities from user messages using regular expressions and a predefined product catalogue.
+`ner.py` uses regular expressions and a small product catalogue to extract:
 
-Currently supported entities include:
+- Order IDs such as `ORD-12345`
+- Indian phone numbers
+- Product names such as `Sony Headphones`
 
-- **Order IDs**
-- **Product names**
-- **Phone numbers**
+Entity extraction is separate from intent classification so the two components can be tested independently.
 
-Extracted entities can be incorporated into generated responses.
-
-### 🤖 Response Generation
-
-Responses are generated using predefined response templates stored in the intent configuration.
-
-The system can personalize responses using extracted entities such as:
-
-- Order IDs
-- Products
-- Phone numbers
-
-### 🛡️ Fallback Handling
-
-If the chatbot cannot confidently determine the user's intent, it does not force a potentially incorrect response.
-
-Instead, it returns a fallback message asking the user to:
-
-- Rephrase the query
-- Use the `help` command
-- Provide a more specific request
-
-### 📝 Session Logging
-
-Each chatbot execution creates a timestamped session log inside the `logs/` directory.
-
-The logs record:
-
-- Session start time
-- User messages
-- Bot responses
-- Conversation flow
-
-The logs are included in the repository as examples of actual chatbot execution and testing.
-
-> **Note:** Do not add real customer information, credentials, private phone numbers, or other sensitive information to committed logs.
-
----
-
-# 🏗️ Project Architecture
-
-The project is divided into separate modules to keep the application organized and maintainable.
+## Project Structure
 
 ```text
-ShopEase-Customer-Support-Chatbot/
-│
+ShopEase-customer-support-chatbot/
 ├── chatbot.py
 ├── preprocess.py
 ├── intent_classifier.py
 ├── ner.py
 ├── logger.py
-├── requirements.txt
-├── README.md
-├── .gitignore
-│
+├── setup_nltk.py
 ├── data/
 │   └── intents.py
-│
-└── logs/
-    ├── chat_log_2026-03-19_12-55-36.txt
-    └── chat_log_2026-04-09_12-00-01.txt
+├── tests/
+│   ├── test_ner.py
+│   └── test_logger.py
+├── logs/
+│   └── sample session logs
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
----
+## Installation
 
-# 📂 Module Description
-
-## `chatbot.py`
-
-Main application/controller.
-
-Responsible for:
-
-- Starting the chatbot
-- Displaying the CLI interface
-- Accepting user input
-- Handling commands
-- Calling the intent classifier
-- Extracting entities
-- Personalizing responses
-- Displaying responses
-- Recording conversations
-
----
-
-## `preprocess.py`
-
-Handles NLP preprocessing.
-
-Responsibilities include:
-
-- Lowercase conversion
-- Punctuation handling
-- Tokenization
-- Stopword removal
-- Converting processed tokens back into text
-
----
-
-## `intent_classifier.py`
-
-Implements the intent-classification pipeline.
-
-Uses:
-
-- `TfidfVectorizer`
-- Cosine similarity
-- Predefined intent patterns
-- Confidence threshold
-- Fallback responses
-
-The classifier builds its TF-IDF representation from the patterns defined in:
-
-```text
-data/intents.py
-```
-
----
-
-## `ner.py`
-
-Handles rule-based entity extraction.
-
-Currently extracts:
-
-- Order IDs
-- Product names
-- Phone numbers
-
-The implementation uses regular expressions and a predefined product catalogue.
-
----
-
-## `logger.py`
-
-Handles session logging.
-
-It:
-
-- Creates the `logs/` directory when required
-- Generates timestamped log filenames
-- Records user messages
-- Records chatbot responses
-- Stores session timestamps
-
----
-
-## `data/intents.py`
-
-Contains the chatbot's intent definitions, example patterns, and response templates.
-
-This acts as the knowledge base used by the intent-classification system.
-
----
-
-# 🧰 Technologies Used
-
-| Technology | Purpose |
-|------------|---------|
-| Python | Core application development |
-| NLTK | NLP preprocessing and tokenization |
-| Scikit-learn | TF-IDF and cosine-similarity processing |
-| TF-IDF | Text feature representation |
-| Cosine Similarity | Intent matching |
-| Regular Expressions | Entity extraction |
-| Colorama | Colored command-line interface |
-| File I/O | Session logging |
-
----
-
-# 📦 Requirements
-
-The project uses the following Python packages:
-
-```text
-nltk==3.8.1
-scikit-learn==1.4.0
-colorama==0.4.6
-```
-
-These dependencies are listed in:
-
-```text
-requirements.txt
-```
-
----
-
-# 🚀 Installation
-
-## 1. Clone the repository
+### 1. Clone
 
 ```bash
-git clone https://github.com/VedxntR18/ShopEase-Customer-Support-Chatbot.git
+git clone https://github.com/VedxntR18/ShopEase-customer-support-chatbot.git
+cd ShopEase-customer-support-chatbot
 ```
 
-Move into the project directory:
+### 2. Create a virtual environment
 
-```bash
-cd ShopEase-Customer-Support-Chatbot
-```
+Windows:
 
----
-
-## 2. Create a virtual environment
-
-### Windows
-
-```bash
+```cmd
 python -m venv venv
-```
-
-Activate it:
-
-```bash
 venv\Scripts\activate
 ```
 
-### macOS / Linux
+Linux/macOS:
 
 ```bash
 python3 -m venv venv
-```
-
-Activate it:
-
-```bash
 source venv/bin/activate
 ```
 
----
-
-## 3. Install dependencies
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# 📚 NLTK Resources
-
-The project requires several NLTK resources.
-
-Run:
+### 4. Download NLTK resources
 
 ```bash
-python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('punkt_tab')"
+python setup_nltk.py
 ```
 
-This downloads the required tokenizer and stopword resources.
+This downloads the tokenizer and stopword resources required by the application.
 
----
-
-# ▶️ Running the Chatbot
-
-Start the application using:
+## Run
 
 ```bash
 python chatbot.py
 ```
 
-You should see a CLI interface similar to:
+The chatbot provides a CLI with commands such as:
 
-```text
-============================================================
-   🛒 Welcome to ShopEase Bot — Customer Support CLI
-============================================================
-   Ask me about: orders, returns, refunds, products, delivery
-   Type 'exit' anytime to quit | Type 'help' for options
-============================================================
-```
+| Command | Purpose |
+|---|---|
+| `help` | Show supported customer-support topics |
+| `exit` | End the session |
+| `quit` | End the session |
+| `bye` | End the session |
+| `goodbye` | End the session |
+| `q` | End the session |
 
-The chatbot will then wait for user input.
+Debug classification output is disabled by default. Set `SHOW_DEBUG = True` in `chatbot.py` when inspecting intent scores and extracted entities during development.
 
----
-
-# 💬 Example Interaction
+## Example
 
 ```text
 You: Where is my order ORD-12345?
 
 ShopEase Bot:
-Your order information...
+Please share your Order ID (format: ORD-XXXXX) and I'll look it up for you.
+(Order detected: ORD-12345)
 ```
 
-The system can detect:
+For a standalone order ID:
 
 ```text
-Order ID: ORD-12345
+You: ORD-12345
+
+ShopEase Bot:
+Demo order status for ORD-12345: the simulated order is currently
+OUT FOR DELIVERY and is expected by tomorrow.
 ```
 
-and use the extracted entity when generating the response.
+These statuses are **simulated template responses**, not live order lookups.
 
----
+## Testing
 
-# ⌨️ Commands
+Run:
 
-| Command | Description |
-|---------|-------------|
-| `help` | Displays available customer-support topics |
-| `exit` | Exits the chatbot |
-| `quit` | Exits the chatbot |
-| `bye` | Exits the chatbot |
-| `goodbye` | Exits the chatbot |
-| `q` | Exits the chatbot |
-
----
-
-# 🧪 Testing & Logs
-
-The repository includes sample session logs generated during chatbot execution.
-
-The logs demonstrate actual interaction flows and can be used to inspect:
-
-- User queries
-- Bot responses
-- Session timestamps
-- Conversation sequences
-- Different support scenarios
-
-Example:
-
-```text
-[12:00:01] Bot: Hello! I'm your ShopEase customer support assistant.
-[12:00:08] You: Where is my order ORD-12345?
-[12:00:08] Bot: ...
+```bash
+pytest tests/ -v
 ```
 
-The logs are intentionally retained as part of the project documentation and testing evidence.
+The current automated tests cover:
 
----
+- Order ID extraction
+- Product extraction
+- Phone-number extraction
+- Log-file creation and message persistence
 
-# 🔐 Privacy & Security Note
+The repository also contains historical/sample chatbot session logs. These are retained as testing evidence and should contain demonstration data only.
 
-This project is intended for educational and demonstration purposes.
+## Logging
 
-The repository should not contain:
+Every new session creates a timestamped file under `logs/`.
 
-- Real customer information
-- Passwords
-- API keys
-- Authentication tokens
-- Private credentials
-- Sensitive personal information
+The logger resolves the log directory relative to the project file, so running the chatbot from another working directory does not redirect logs into an unexpected location.
 
-Before committing new logs, verify that they contain only safe demonstration/test data.
+Do not commit real customer information, credentials, private phone numbers, or other sensitive information.
 
----
+## Current Scope and Limitations
 
-# 🧩 Project Design
+This project is an **academic/demo NLP application**, not a production customer-support platform.
 
-The application follows a modular structure:
+- Intent classification uses TF-IDF + cosine similarity rather than a transformer model.
+- Intents and responses are predefined in `data/intents.py`.
+- Entity extraction is rule-based and catalogue-limited.
+- There is no real order-management database.
+- Order status, refunds, coupons, delivery outcomes, and agent handoffs are simulated response templates.
+- There is no authentication or customer-account integration.
+- The current interface is CLI-only.
+- The sample logs document earlier experiments and may contain classification failures; they are evidence of the development process rather than a formal accuracy benchmark.
 
-```text
-                ┌───────────────────┐
-                │    User Input     │
-                └─────────┬─────────┘
-                          │
-                          ▼
-                ┌───────────────────┐
-                │   Preprocessing   │
-                │ NLTK / Tokenizing │
-                └─────────┬─────────┘
-                          │
-                          ▼
-                ┌───────────────────┐
-                │ Intent Classifier │
-                │ TF-IDF + Cosine   │
-                │    Similarity     │
-                └─────────┬─────────┘
-                          │
-                          ▼
-                ┌───────────────────┐
-                │ Entity Extraction │
-                │ Regex + Catalogue │
-                └─────────┬─────────┘
-                          │
-                          ▼
-                ┌───────────────────┐
-                │ Response Handling │
-                │ Template + Entity │
-                │    Injection      │
-                └─────────┬─────────┘
-                          │
-                          ▼
-                ┌───────────────────┐
-                │  Session Logger   │
-                └───────────────────┘
-```
+## Future Improvements
 
----
-
-# 🎯 Project Objectives
-
-The main objectives of ShopEase are to:
-
-1. Build a lightweight NLP-based customer-support system.
-2. Process natural-language customer queries.
-3. Classify queries into predefined support intents.
-4. Extract useful entities from user messages.
-5. Generate contextual responses.
-6. Handle unsupported or ambiguous queries through fallback responses.
-7. Maintain timestamped chatbot session logs.
-8. Demonstrate modular Python application development.
-
----
-
-# 🔮 Possible Future Improvements
-
-Potential improvements include:
-
-- Web-based user interface
-- REST API integration
+- Web UI or REST API
 - Database-backed order lookup
-- Real-time order tracking
-- Persistent customer sessions
-- More advanced NLP models
-- Transformer-based intent classification
+- Real order tracking integration
 - Context-aware multi-turn conversations
+- Larger intent dataset
+- Automated intent-classification accuracy benchmark
+- Transformer-based intent model
 - Authentication and authorization
-- Production-grade logging
-- Automated testing
+- Production logging and monitoring
 - Deployment as a web service
-- Integration with an actual e-commerce backend
 
----
+## Author
 
-# 📌 Current Scope
-
-The current version is a **CLI-based educational/demo application**.
-
-It uses predefined intents and responses rather than connecting to a real e-commerce database or production customer-support platform.
-
-No external API or live order-management system is required for the current implementation.
-
----
-
-# 👨‍💻 Author
-
-## Vedant Vaibhav Rangnekar
-
-B.Tech. Computer Science Engineering  
-Artificial Intelligence & Machine Learning
-
+**Vedant Vaibhav Rangnekar**  
+B.Tech. Computer Science Engineering — Artificial Intelligence & Machine Learning  
 Ramrao Adik Institute of Technology, DY Patil, Navi Mumbai
 
-### Connect
+- GitHub: https://github.com/VedxntR18
+- Portfolio: https://vedantrangnekar.in
+- LinkedIn: https://www.linkedin.com/in/vedant-rangnekar-500944340
 
-- **GitHub:** https://github.com/VedxntR18
-- **Portfolio:** https://vedantrangnekar.in
-- **LinkedIn:** https://www.linkedin.com/in/vedant-rangnekar-500944340
-- **Email:** vedantrangnekar2005@gmail.com
+## License
 
----
-
-# 📄 License
-
-This project is intended for educational, academic, and portfolio purposes.
-
-Add a formal open-source license here if you decide to distribute the project under one.
+This project is intended for educational, academic, and portfolio purposes. Add a formal open-source license if you decide to distribute it under one.
