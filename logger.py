@@ -1,5 +1,8 @@
-import os
 from datetime import datetime
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+LOGS_DIR = PROJECT_ROOT / "logs"
 
 
 def get_log_filename():
@@ -14,12 +17,14 @@ def save_message(filepath, sender, message):
 
 
 def start_log():
-    os.makedirs("logs", exist_ok=True)
-    filepath = os.path.join("logs", get_log_filename())
-    with open(filepath, "w", encoding="utf-8") as f:
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    filepath = LOGS_DIR / get_log_filename()
+
+    with filepath.open("w", encoding="utf-8") as f:
         f.write("=" * 50 + "\n")
-        f.write(f"  ShopEase Chatbot — Session Log\n")
+        f.write("  ShopEase Chatbot — Session Log\n")
         f.write(f"  Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("=" * 50 + "\n\n")
+
     print(f"  📝 Chat log started: {filepath}\n")
-    return filepath
+    return str(filepath)
