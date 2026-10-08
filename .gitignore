@@ -38,3 +38,5 @@ htmlcov/
 # Temporary files
 *.tmp
 *.temp
+# Local test/session artifacts
+.pytest_cache/
