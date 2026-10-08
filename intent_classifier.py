@@ -1,11 +1,15 @@
 import random
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
 from data.intents import INTENTS
 from preprocess import preprocess, tokens_to_string
 
 
 class IntentClassifier:
+    CONFIDENCE_THRESHOLD = 0.20
+
     def __init__(self):
         self.vectorizer = TfidfVectorizer()
         self.patterns = []
@@ -21,33 +25,42 @@ class IntentClassifier:
                 clean = tokens_to_string(preprocess(pattern))
                 self.patterns.append(clean)
                 self.tags.append(tag)
+
         self.tfidf_matrix = self.vectorizer.fit_transform(self.patterns)
+
+    def response_for_intent(self, tag):
+        return random.choice(self.responses[tag])
 
     def classify(self, user_input):
         clean_input = tokens_to_string(preprocess(user_input))
-        if len(clean_input.split()) < 2 and clean_input not in ["hi","hello","bye","thanks","help"]:
+
+        if len(clean_input.split()) < 2 and clean_input not in {
+            "hi", "hello", "bye", "thanks", "help"
+        }:
             return "unknown", 0.0, self._fallback_response()
+
         if not clean_input.strip():
             return "unknown", 0.0, self._fallback_response()
+
         input_vector = self.vectorizer.transform([clean_input])
         similarities = cosine_similarity(input_vector, self.tfidf_matrix).flatten()
+
         best_index = similarities.argmax()
         best_score = similarities[best_index]
         best_tag = self.tags[best_index]
-        if best_score < 0.20:
-            return "unknown", best_score, self._fallback_response()
-        response = random.choice(self.responses[best_tag])
-        return best_tag, round(best_score, 2), response
+
+        if best_score < self.CONFIDENCE_THRESHOLD:
+            return "unknown", round(best_score, 2), self._fallback_response()
+
+        return best_tag, round(best_score, 2), self.response_for_intent(best_tag)
 
     def _fallback_response(self):
         fallbacks = [
             "I'm sorry, I didn't understand that. Could you rephrase?\n"
-        "  💡 Try: 'track my order', 'return item', 'refund status'",
-
+            "  💡 Try: 'track my order', 'return item', 'refund status'",
             "Hmm, I'm not sure about that.\n"
             "  💡 Type 'help' to see all topics I can assist with!",
-
             "I couldn't catch that. Could you be more specific?\n"
-            "  💡 Example: 'Where is my order ORD-12345?'"
+            "  💡 Example: 'Where is my order ORD-12345?'",
         ]
         return random.choice(fallbacks)
