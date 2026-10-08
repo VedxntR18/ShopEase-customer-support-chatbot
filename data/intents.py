@@ -44,9 +44,9 @@ INTENTS = [
             "ORD-", "my order", "order details for"
         ],
         "responses": [
-            "Got it! Order {order_id} is currently OUT FOR DELIVERY and will arrive by tomorrow.",
-            "Order {order_id} has been SHIPPED via BlueDart. Expected delivery: 2 business days.",
-            "Order {order_id} is PROCESSING at our warehouse. It will ship within 24 hours."
+            "Demo order status for {order_id}: the simulated order is currently OUT FOR DELIVERY and is expected by tomorrow.",
+            "Demo order status for {order_id}: the simulated order has been SHIPPED. Expected delivery: 2 business days.",
+            "Demo order status for {order_id}: the simulated order is PROCESSING at the warehouse and will ship within 24 hours."
         ]
     },
     {
@@ -150,9 +150,9 @@ INTENTS = [
             "sale going on", "best offers", "coupon not working"
         ],
         "responses": [
-            "Use code SAVE10 for 10% off on orders above ₹500! Valid this week only.",
-            "Today's deals: FIRST20 (20% off for new users), FLAT100 (₹100 off above ₹999).",
-            "Check the 'Offers' section in our app for real-time coupons. Code SAVE10 always works!"
+            "Demo offer: SAVE10 represents a simulated 10% discount on orders above ₹500.",
+            "Demo offers: FIRST20 and FLAT100 are example coupon codes for this chatbot simulation.",
+            "In a real integration, the chatbot would query the live Offers service. This demo uses predefined coupon responses."
         ]
     },
     {
@@ -163,9 +163,9 @@ INTENTS = [
             "live agent", "customer service contact", "escalate my issue"
         ],
         "responses": [
-            "Connecting you to a live agent... Meanwhile, our helpline is 1800-XXX-XXXX (9AM-9PM).",
-            "I'll escalate this to a human agent right away. You can also call 1800-XXX-XXXX.",
-            "Sure! Our customer care: 1800-XXX-XXXX | Email: support@shopease.com | 9AM-9PM."
+            "Demo handoff: this would connect you to a live agent in a real integration. No live support connection is configured.",
+            "Demo escalation: a real deployment would hand this conversation to a support agent. No live escalation service is configured.",
+            "Demo contact details only: no real ShopEase customer-care channel is connected to this application."
         ]
     },
     {
